@@ -5,4 +5,5 @@ def main():
     Display.Display()
 
 
-print("boo")
+if __name__ == "__main__":
+    main()
