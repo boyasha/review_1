@@ -1,5 +1,5 @@
 from tkinter import *
-from tkinter import messagebox, filedialog, Toplevel
+from tkinter import filedialog
 import Algorithms
 
 root = Tk()
@@ -14,19 +14,20 @@ def showing_caesar_encryption():
     input_way.place(x=90, y=30)
 
     shift_input_way_label = StringVar()
-    shift_input_way_label.set("Сдвиг(0-33):")
-    shift_input_way = Entry(bd="3", width="12", textvariable=shift_input_way_label)
+    shift_input_way_label.set("Сдвиг(-33:33):")
+    shift_input_way = Entry(bd="3", width="13", textvariable=shift_input_way_label)
     shift_input_way.place(x=90, y=66)
 
     choose_input_way = Button(text="Выбрать", activebackground="grey", command=lambda:
-    input_way_label.set(filedialog.askopenfilename()))
+                              input_way_label.set(filedialog.askopenfilename()))
     choose_input_way.place(x=235, y=65)
 
-    clear_input_way = Button(text="Удалить", activebackground="grey")
+    clear_input_way = Button(text="Удалить", activebackground="grey", command=lambda:
+                             [input_way_label.set(""), shift_input_way_label.set("")])
     clear_input_way.place(x=335, y=65)
 
     encrypt = Button(text="Зашифровать", activebackground="grey", width="38", height="2", command=lambda:
-                     Toplevel(root))
+                     Algorithms.caesar_encryption(input_way.get(), shift_input_way.get()))
     encrypt.place(x=90, y=150)
 
 
