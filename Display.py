@@ -1,39 +1,67 @@
 from tkinter import *
-
-def caesar_encryption():
-    pass
+from tkinter import messagebox, filedialog
 
 
+# Шифр Цезаря
+def choose_file_for_caesar_encryption():
+    way_to_the_file = filedialog.askopenfilename()
+    print(way_to_the_file)
 
-class Display():
+
+def showing_caesar_encryption():
+    input_way_label = StringVar()
+    input_way_label.set("Путь до файла:")
+    input_way = Entry(bd="4", width="40", textvariable=input_way_label)
+    input_way.place(x=90, y=30)
+
+    shift_input_way_label = StringVar()
+    shift_input_way_label.set("Сдвиг(0-25):")
+    shift_input_way = Entry(bd="3", width="12", textvariable=shift_input_way_label)
+    shift_input_way.place(x=90, y=66)
+
+    choose_input_way = Button(text="Выбрать", activebackground="grey", command=lambda:
+                              input_way_label.set(filedialog.askopenfilename()))
+    choose_input_way.place(x=235, y=65)
+
+    clear_input_way = Button(text="Удалить", activebackground="grey")
+    clear_input_way.place(x=335, y=65)
+
+    encrypt = Button(text="Зашифровать", activebackground="grey", width="38", height="2")
+    encrypt.place(x=90, y=150)
+
+class Display:
     root = Tk()
     root.title("Шифратор")
-    root.geometry("1000x800")
+    root.geometry("500x300")
+    root.resizable(width=False, height=False)
 
     main_menu = Menu(root)
     algorithm_menu = Menu()
     steg_menu = Menu()
 
-    main_menu.add_cascade(label="Алгоритмы", menu=algorithm_menu)
-    main_menu.add_cascade(label="Стеганография", menu=steg_menu)
+    main_menu.add_cascade(label="Алгоритмы", menu=algorithm_menu, activebackground="grey")
+    main_menu.add_cascade(label="Стеганография", menu=steg_menu, activebackground="grey")
 
-    algorithm_menu.add_command(label="Шифрование Цезаря", command=)
-    algorithm_menu.add_command(label="Шифрование Виженера")
-    algorithm_menu.add_command(label="Шифрование Вернама")
-    algorithm_menu.add_command(label="Шифрование Азбуки Морзе")
+    algorithm_menu.add_command(label="Шифрование Цезаря", command=showing_caesar_encryption, activebackground="grey")
+    algorithm_menu.add_command(label="Шифрование Виженера", command=showing_caesar_encryption, activebackground="grey")
+    algorithm_menu.add_command(label="Шифрование Вернама", command=showing_caesar_encryption, activebackground="grey")
+    algorithm_menu.add_command(label="Шифрование Азбуки Морзе", command=showing_caesar_encryption,
+                               activebackground="grey")
     algorithm_menu.add_separator()
-    algorithm_menu.add_command(label="Дешифрование Цезаря")
-    algorithm_menu.add_command(label="Дешифрование Виженера")
-    algorithm_menu.add_command(label="Дешифрование Вернама")
-    algorithm_menu.add_command(label="Дешифрование Азбуки Морзе")
+    algorithm_menu.add_command(label="Дешифрование Цезаря", command=showing_caesar_encryption, activebackground="grey")
+    algorithm_menu.add_command(label="Дешифрование Виженера", command=showing_caesar_encryption,
+                               activebackground="grey")
+    algorithm_menu.add_command(label="Дешифрование Вернама", command=showing_caesar_encryption, activebackground="grey")
+    algorithm_menu.add_command(label="Дешифрование Азбуки Морзе", command=showing_caesar_encryption,
+                               activebackground="grey")
 
-    steg_menu.add_command(label="Внедрение в bmp")
-    steg_menu.add_command(label="Внедрение в jpg")
-    steg_menu.add_command(label="Внедрение в png")
+    steg_menu.add_command(label="Внедрение в bmp", command=showing_caesar_encryption, activebackground="grey")
+    steg_menu.add_command(label="Внедрение в jpg", command=showing_caesar_encryption, activebackground="grey")
+    steg_menu.add_command(label="Внедрение в png", command=showing_caesar_encryption, activebackground="grey")
     steg_menu.add_separator()
-    steg_menu.add_command(label="Извлечение из bmp")
-    steg_menu.add_command(label="Извлечение из jpg")
-    steg_menu.add_command(label="Извлечение из png")
+    steg_menu.add_command(label="Извлечение из bmp", command=showing_caesar_encryption, activebackground="grey")
+    steg_menu.add_command(label="Извлечение из jpg", command=showing_caesar_encryption, activebackground="grey")
+    steg_menu.add_command(label="Извлечение из png", command=showing_caesar_encryption, activebackground="grey")
 
     root.config(menu=main_menu)
     root.mainloop()
