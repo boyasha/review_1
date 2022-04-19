@@ -6,6 +6,12 @@ def error():
     messagebox.showwarning(message="Что-то пошло не так, попробуйте заново!")
 
 
+def get_new_way_to_mod_file(way_to_file, result_string):
+    point_index = way_to_file.rfind('.')
+    new_way_mod_file = way_to_file[:point_index] + '_modified' + way_to_file[point_index:]
+    open(new_way_mod_file, "w+").write(result_string)
+
+
 def caesar_encryption(way_to_file, shift, flag=""):
     numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     en_alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -199,6 +205,7 @@ def morse_encrtyption(way_to_file, language=0, check_decoder=0):
                                                 command=lambda:
                                                 input_window.clipboard_append(result_string))
                 copy_text_input_window.place(x=1, y=50)
+
 
 
             except Exception as exc:

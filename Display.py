@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import filedialog
 import Algorithms
+import Steganography
 
 root = Tk()
 
@@ -164,6 +165,41 @@ def showing_caesar_partial_analysis(name1, name2):
     encrypt.place(x=90, y=150)
 
 
+def showing_decode(name1, name2, check_decode=0, type_of_file="bmp"):
+    destroy_useless_items()
+    root.title(f"{name1} {type_of_file}")
+
+    input_way_label = StringVar()
+    input_way_label.set(f"Путь до картинки (.{type_of_file}):")
+    input_way = Entry(bd="4", width="40", textvariable=input_way_label)
+    input_way.place(x=90, y=30)
+
+    if check_decode == 0:
+        message_label = StringVar()
+        message_label.set("Сообщение:")
+        message = Entry(bd="3", width="13", textvariable=message_label)
+        message.place(x=90, y=66)
+
+    choose_input_way = Button(text="Выбрать", activebackground="grey", command=lambda:
+                              input_way_label.set(filedialog.askopenfilename()))
+    choose_input_way.place(x=235, y=65)
+
+    clear_input_way = Button(text="Удалить", activebackground="grey", command=lambda:
+                             [input_way_label.set(""), message.set("")])
+    clear_input_way.place(x=335, y=65)
+
+    if check_decode == 0:
+        encrypt = Button(text=name2, activebackground="grey", width="38", height="2",
+                         command=lambda:
+                         Steganography.encode(input_way.get(), message.get()))
+    if check_decode == 1:
+        encrypt = Button(text=name2, activebackground="grey", width="38", height="2",
+                         command=lambda:
+                         Steganography.decode(input_way.get()))
+
+    encrypt.place(x=90, y=150)
+
+
 class Display:
     root.title("Шифратор")
     root.geometry("500x300")
@@ -200,13 +236,19 @@ class Display:
                                activebackground="grey",
                                command=lambda: showing_morse("Дешифрование", "Дешифровать", 1))
 
-    steg_menu.add_command(label="Внедрение в bmp", activebackground="grey")
-    steg_menu.add_command(label="Внедрение в jpg", activebackground="grey")
-    steg_menu.add_command(label="Внедрение в png", activebackground="grey")
+    steg_menu.add_command(label="Внедрение в bmp", activebackground="grey", command=lambda:
+                          showing_decode("Внедрение в", "Внедрить", 0, "bmp"))
+    steg_menu.add_command(label="Внедрение в jpg", activebackground="grey", command=lambda:
+                          showing_decode("Внедрение в", "Внедрить", 0, "jpg"))
+    steg_menu.add_command(label="Внедрение в png", activebackground="grey", command=lambda:
+                          showing_decode("Внедрение в", "Внедрить", 0, "png"))
     steg_menu.add_separator()
-    steg_menu.add_command(label="Извлечение из bmp", activebackground="grey")
-    steg_menu.add_command(label="Извлечение из jpg", activebackground="grey")
-    steg_menu.add_command(label="Извлечение из png", activebackground="grey")
+    steg_menu.add_command(label="Извлечение из bmp", activebackground="grey", command=lambda:
+                          showing_decode("Внедрение из", "Извлечь", 1, "bmp"))
+    steg_menu.add_command(label="Извлечение из jpg", activebackground="grey", command=lambda:
+                          showing_decode("Внедрение в", "Извлечь", 1, "jpg"))
+    steg_menu.add_command(label="Извлечение из png", activebackground="grey", command=lambda:
+                          showing_decode("Внедрение в", "Извлечь", 1, "png"))
 
     root.config(menu=main_menu)
     root.mainloop()
