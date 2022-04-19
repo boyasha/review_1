@@ -80,10 +80,6 @@ def caesar_encryption(way_to_file, shift, flag=""):
             error()
 
 
-def visiner_encryption(way_to_file, key, language, flag=""):
-    pass
-
-
 def morse_encrtyption(way_to_file, language=0, check_decoder=0):
     input_window = Toplevel()
     symbol = {
@@ -187,7 +183,7 @@ def morse_encrtyption(way_to_file, language=0, check_decoder=0):
             text_input_window.place(x=1, y=1)
 
             copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey", command=lambda:
-                                            input_window.clipboard_append(result_string))
+            input_window.clipboard_append(result_string))
             copy_text_input_window.place(x=1, y=70)
 
         except Exception:
@@ -226,7 +222,7 @@ def morse_encrtyption(way_to_file, language=0, check_decoder=0):
             text_input_window.place(x=1, y=1)
 
             copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey", command=lambda:
-                                            input_window.clipboard_append(result_string))
+            input_window.clipboard_append(result_string))
             copy_text_input_window.place(x=1, y=70)
 
         except Exception:
@@ -237,7 +233,8 @@ def morse_encrtyption(way_to_file, language=0, check_decoder=0):
                 text_input_window = Label(input_window, text=f"Итог: {result_string}")
                 text_input_window.place(x=1, y=1)
 
-                copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey", command=lambda:
+                copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey",
+                                                command=lambda:
                                                 input_window.clipboard_append(result_string))
                 copy_text_input_window.place(x=1, y=50)
             except Exception:
@@ -248,7 +245,7 @@ def morse_encrtyption(way_to_file, language=0, check_decoder=0):
     input_window.mainloop()
 
 
-def caesar_partial_analysis_encrtyption(way_to_file, language = 0):
+def caesar_partial_analysis_encrtyption(way_to_file, language=0):
     input_window = Toplevel()
     result_string = ""
 
@@ -268,10 +265,11 @@ def caesar_partial_analysis_encrtyption(way_to_file, language = 0):
                     count_most_popular = count_letters[i]
             else:
                 count_letters[i] = 0
-        shift = ord(list(count_letters.keys())[list(count_letters.values()).index(count_most_popular)]) - ord(popular_letter)
+        shift = ord(list(count_letters.keys())[list(count_letters.values()).index(count_most_popular)]) - ord(
+            popular_letter)
         for i in text_from_file:
             if i == " ": continue
-            result_string += chr(ord(i)-shift)
+            result_string += chr(ord(i) - shift)
         point_index = way_to_file.rfind('.')
         new_way_mod_file = way_to_file[:point_index] + '_modified' + way_to_file[point_index:]
         open(new_way_mod_file, "w+").write(result_string)
@@ -279,7 +277,7 @@ def caesar_partial_analysis_encrtyption(way_to_file, language = 0):
                                   text=f"Итог: {result_string}\n\nПуть до зашифрованного файла: {new_way_mod_file}")
         text_input_window.place(x=1, y=1)
         copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey", command=lambda:
-                                        input_window.clipboard_append(result_string))
+        input_window.clipboard_append(result_string))
         copy_text_input_window.place(x=1, y=70)
     except Exception:
         try:
@@ -292,7 +290,8 @@ def caesar_partial_analysis_encrtyption(way_to_file, language = 0):
                         count_most_popular = count_letters[i]
                 else:
                     count_letters[i] = 0
-            shift = ord(list(count_letters.keys())[list(count_letters.values()).index(count_most_popular)]) - ord(popular_letter)
+            shift = ord(list(count_letters.keys())[list(count_letters.values()).index(count_most_popular)]) - ord(
+                popular_letter)
             for i in way_to_file:
                 if i == " ":
                     continue
@@ -301,10 +300,222 @@ def caesar_partial_analysis_encrtyption(way_to_file, language = 0):
             text_input_window = Label(input_window, text=f"Итог: {result_string}")
             text_input_window.place(x=1, y=1)
             copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey", command=lambda:
-                                            input_window.clipboard_append(result_string))
+            input_window.clipboard_append(result_string))
             copy_text_input_window.place(x=1, y=50)
         except Exception:
             error()
+
+    input_window.geometry("800x300")
+    input_window.mainloop()
+
+
+def visener_encrtyption(way_to_file, key, language=0, check_decode=0):
+    input_window = Toplevel()
+    result_string = ""
+
+    if language == 0:
+        alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    else:
+        alphabet = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М',
+                    'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я']
+    key = key.upper()
+
+    if check_decode == 1:
+        try:
+            for i in key:
+                if i not in alphabet:
+                    raise Exception
+
+            text_from_file = open(way_to_file, "r").read().upper()
+
+            for i in range(len(text_from_file)):
+                result_string += alphabet[
+                    (alphabet.index(text_from_file[i]) - (alphabet.index(key[i % len(key)]))) % len(alphabet)]
+
+            point_index = way_to_file.rfind('.')
+            new_way_mod_file = way_to_file[:point_index] + '_modified' + way_to_file[point_index:]
+            open(new_way_mod_file, "w+").write(result_string)
+
+            text_input_window = Label(input_window,
+                                      text=f"Итог: {result_string}\n\nПуть до зашифрованного файла: {new_way_mod_file}")
+            text_input_window.place(x=1, y=1)
+
+            copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey", command=lambda:
+                                            input_window.clipboard_append(result_string))
+            copy_text_input_window.place(x=1, y=70)
+        except Exception:
+
+            try:
+                for i in key:
+                    if i not in alphabet:
+                        raise Exception
+
+                for i in range(len(way_to_file)):
+                    result_string += alphabet[
+                        (alphabet.index(way_to_file[i]) - (alphabet.index(key[i % len(key)]))) % len(alphabet)]
+
+                text_input_window = Label(input_window, text=f"Итог: {result_string}")
+                text_input_window.place(x=1, y=1)
+
+                copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey",
+                                                command=lambda:
+                                                input_window.clipboard_append(result_string))
+                copy_text_input_window.place(x=1, y=50)
+            except Exception:
+                error()
+                return
+    else:
+        try:
+            for i in key:
+                if i not in alphabet:
+                    raise Exception
+
+            text_from_file = open(way_to_file, "r").read().upper()
+
+            for i in range(len(text_from_file)):
+                result_string += alphabet[
+                    (alphabet.index(text_from_file[i]) + (alphabet.index(key[i % len(key)]))) % len(alphabet)]
+
+            point_index = way_to_file.rfind('.')
+            new_way_mod_file = way_to_file[:point_index] + '_modified' + way_to_file[point_index:]
+            open(new_way_mod_file, "w+").write(result_string)
+
+            text_input_window = Label(input_window,
+                                      text=f"Итог: {result_string}\n\nПуть до зашифрованного файла: {new_way_mod_file}")
+            text_input_window.place(x=1, y=1)
+
+            copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey", command=lambda:
+                                            input_window.clipboard_append(result_string))
+            copy_text_input_window.place(x=1, y=70)
+
+        except Exception as exc:
+
+            try:
+                for i in key:
+                    if i not in alphabet:
+                        raise Exception
+
+                for i in range(len(way_to_file)):
+                    result_string += alphabet[
+                        (alphabet.index(way_to_file[i]) + (alphabet.index(key[i % len(key)]))) % len(alphabet)]
+
+                text_input_window = Label(input_window, text=f"Итог: {result_string}")
+                text_input_window.place(x=1, y=1)
+
+                copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey",
+                                                command=lambda:
+                                                input_window.clipboard_append(result_string))
+                copy_text_input_window.place(x=1, y=50)
+            except Exception:
+                error()
+                return
+
+    input_window.geometry("800x300")
+    input_window.mainloop()
+
+
+def vernam_encrtyption(way_to_file, key, language=0, check_decode=0):
+    input_window = Toplevel()
+    result_string = ""
+
+    if language == 0:
+        alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    else:
+        alphabet = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М',
+                    'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я']
+    key = key.upper()
+
+    if check_decode == 1:
+        try:
+            for i in key:
+                if i not in alphabet:
+                    raise Exception
+
+            text_from_file = open(way_to_file, "r").read().upper()
+
+            for i in range(len(text_from_file)):
+                result_string += alphabet[
+                    (alphabet.index(text_from_file[i]) - (alphabet.index(key[i % len(key)]))) % len(alphabet)]
+
+            point_index = way_to_file.rfind('.')
+            new_way_mod_file = way_to_file[:point_index] + '_modified' + way_to_file[point_index:]
+            open(new_way_mod_file, "w+").write(result_string)
+
+            text_input_window = Label(input_window,
+                                      text=f"Итог: {result_string}\n\nПуть до зашифрованного файла: {new_way_mod_file}")
+            text_input_window.place(x=1, y=1)
+
+            copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey", command=lambda:
+                                            input_window.clipboard_append(result_string))
+            copy_text_input_window.place(x=1, y=70)
+        except Exception:
+
+            try:
+                for i in key:
+                    if i not in alphabet:
+                        raise Exception
+
+                for i in range(len(way_to_file)):
+                    result_string += alphabet[
+                        (alphabet.index(way_to_file[i]) - (alphabet.index(key[i % len(key)]))) % len(alphabet)]
+
+                text_input_window = Label(input_window, text=f"Итог: {result_string}")
+                text_input_window.place(x=1, y=1)
+
+                copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey",
+                                                command=lambda:
+                                                input_window.clipboard_append(result_string))
+                copy_text_input_window.place(x=1, y=50)
+            except Exception:
+                error()
+                return
+    else:
+        try:
+            for i in key:
+                if i not in alphabet:
+                    raise Exception
+
+            text_from_file = open(way_to_file, "r").read().upper()
+
+            for i in range(len(text_from_file)):
+                result_string += alphabet[
+                    (alphabet.index(text_from_file[i]) + (alphabet.index(key[i % len(key)]))) % len(alphabet)]
+
+            point_index = way_to_file.rfind('.')
+            new_way_mod_file = way_to_file[:point_index] + '_modified' + way_to_file[point_index:]
+            open(new_way_mod_file, "w+").write(result_string)
+
+            text_input_window = Label(input_window,
+                                      text=f"Итог: {result_string}\n\nПуть до зашифрованного файла: {new_way_mod_file}")
+            text_input_window.place(x=1, y=1)
+
+            copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey", command=lambda:
+                                            input_window.clipboard_append(result_string))
+            copy_text_input_window.place(x=1, y=70)
+
+        except Exception as exc:
+
+            try:
+                for i in key:
+                    if i not in alphabet:
+                        raise Exception
+
+                for i in range(len(way_to_file)):
+                    result_string += alphabet[
+                        (alphabet.index(way_to_file[i]) + (alphabet.index(key[i % len(key)]))) % len(alphabet)]
+
+                text_input_window = Label(input_window, text=f"Итог: {result_string}")
+                text_input_window.place(x=1, y=1)
+
+                copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey",
+                                                command=lambda:
+                                                input_window.clipboard_append(result_string))
+                copy_text_input_window.place(x=1, y=50)
+            except Exception:
+                error()
+                return
 
     input_window.geometry("800x300")
     input_window.mainloop()

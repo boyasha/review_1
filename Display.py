@@ -38,7 +38,7 @@ def showing_caesar(name1, name2, flag=""):
     encrypt.place(x=90, y=150)
 
 
-def showing_visener(name1, name2, flag=''):
+def showing_visener(name1, name2, check_decode=0):
     destroy_useless_items()
     root.title(f"{name1} Виженера")
 
@@ -68,11 +68,11 @@ def showing_visener(name1, name2, flag=''):
     en_checkbutton.place(x=230, y=110)
 
     encrypt = Button(text=name2, activebackground="grey", width="38", height="2",
-                     command=Algorithms.visiner_encryption(input_way.get(), key_input_way.get(), value_radiobutton.get()))
+                     command=lambda: Algorithms.visener_encrtyption(input_way.get(), key_input_way.get(), value_radiobutton.get(), check_decode))
     encrypt.place(x=90, y=150)
 
 
-def showing_vernam(name1, name2):
+def showing_vernam(name1, name2, check_decode=0):
     destroy_useless_items()
     root.title(f"{name1} Вернама")
 
@@ -102,7 +102,7 @@ def showing_vernam(name1, name2):
     en_checkbutton.place(x=230, y=110)
 
     encrypt = Button(text=name2, activebackground="grey", width="38", height="2",
-                     command=Algorithms.visiner_encryption(input_way.get(), key_input_way.get(), value_radiobutton.get()))
+                     command=lambda: Algorithms.vernam_encrtyption(input_way.get(), key_input_way.get(), value_radiobutton.get(), check_decode))
     encrypt.place(x=90, y=150)
 
 
@@ -179,7 +179,7 @@ class Display:
     algorithm_menu.add_command(label="Шифрование Цезаря",
                                command=lambda: showing_caesar("Шифрование", "Зашифровать"), activebackground="grey")
     algorithm_menu.add_command(label="Шифрование Виженера", activebackground="grey",
-                               command=lambda: showing_visener('Шифрование', 'Зашифровать', ''))
+                               command=lambda: showing_visener('Шифрование', 'Зашифровать', 0))
     algorithm_menu.add_command(label="Шифрование Вернама", activebackground="grey", command=lambda:
                                showing_vernam("Шифрование", "Зашифровать"))
     algorithm_menu.add_command(label="Шифрование Азбуки Морзе", activebackground="grey", command=lambda:
@@ -190,9 +190,9 @@ class Display:
                                activebackground="grey")
     algorithm_menu.add_command(label="Дешифрование Виженера",
                                activebackground="grey",
-                               command=lambda: showing_visener('Дешифрование', 'Дешифровать', ''))
+                               command=lambda: showing_visener('Дешифрование', 'Дешифровать', 1))
     algorithm_menu.add_command(label="Дешифрование Вернама", activebackground="grey", command=lambda:
-                               showing_vernam("Дешифрование", "Дешифровать"))
+                               showing_vernam("Дешифрование", "Дешифровать", 1))
     algorithm_menu.add_command(label="Дешифрование Цезаря частотным анализом",
                                activebackground="grey",
                                command=lambda: showing_caesar_partial_analysis("Дешифрование", "Дешифровать"))
