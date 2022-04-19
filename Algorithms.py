@@ -6,7 +6,7 @@ def error():
     messagebox.showwarning(message="Что-то пошло не так, попробуйте заново!")
 
 
-def caesar_encryption(way_to_file, shift, flag = ""):
+def caesar_encryption(way_to_file, shift, flag=""):
     numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     en_alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
                    'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
@@ -45,7 +45,7 @@ def caesar_encryption(way_to_file, shift, flag = ""):
             result_string = result_string.swapcase()
 
         point_index = way_to_file.rfind('.')
-        new_way_mod_file = way_to_file[:point_index]+'_modified'+way_to_file[point_index:]
+        new_way_mod_file = way_to_file[:point_index] + '_modified' + way_to_file[point_index:]
         open(new_way_mod_file, "w+").write(result_string)
 
         result_string += f"\n\n f{new_way_mod_file}"
@@ -76,9 +76,126 @@ def caesar_encryption(way_to_file, shift, flag = ""):
             if shift < 0:
                 result_string = result_string.swapcase()
 
-        except Exception as exc:
-                error()
+        except Exception:
+            error()
 
 
 def visiner_encryption(way_to_file, key, language, flag=""):
     pass
+
+
+def morse_encrtyption(way_to_file, language=0, check_decoder=0):
+    input_window = Toplevel()
+    symbol = {
+        "a": ".-",
+        "b": "-...",
+        "c": "-.-.",
+        "d": "-..",
+        "e": ".",
+        "f": "..-.",
+        "g": "--.",
+        "h": "....",
+        "i": "..",
+        "j": ".---",
+        "k": "-.-",
+        "l": ".-..",
+        "m": "--",
+        "n": "-.",
+        "o": "---",
+        "p": ".--.",
+        "q": "--.-",
+        "r": ".-.",
+        "s": "...",
+        "t": "-",
+        "u": "..-",
+        "v": "...-",
+        "w": ".--",
+        "x": "-..-",
+        "y": "-.--",
+        "z": "--..",
+        " ": " ",
+        "0": "-----",
+        "1": ".----",
+        "2": "..---",
+        "3": "...--",
+        "4": "....-",
+        "5": ".....",
+        "6": "-....",
+        "7": "--...",
+        "8": "---..",
+        "9": "----.",
+        "а": ".-",
+        "б": "-...",
+        "в": ".--",
+        "г": "--.",
+        "д": "-..",
+        "е": ".",
+        "ё": ".",
+        "ж": "...-",
+        "з": "--..",
+        "и": "..",
+        "й": ".---",
+        "к": "-.-",
+        "л": ".-..",
+        "м": "--",
+        "н": "-.",
+        "о": "---",
+        "п": ".--.",
+        "р": ".-.",
+        "с": "...",
+        "т": "-",
+        "у": "..-",
+        "ф": "..-.",
+        "х": "....",
+        "ц": "-.-.",
+        "ч": "---.",
+        "ш": "----",
+        "щ": "--.-",
+        "ь": "-..-",
+        "ъ": "-..-",
+        "ы": "-.--",
+        "э": "..-..",
+        "ю": "..__",
+        "я": ".-.-",
+        ".": "......",
+        ",": ".-.-.-",
+        "?": "..--..",
+        "!": "--..--",
+    }
+    result_string = ''
+
+    try:
+        text_from_file = open(way_to_file, "r").read().lower()
+
+        for i in text_from_file:
+            result_string += symbol[i] + " "
+
+        point_index = way_to_file.rfind('.')
+        new_way_mod_file = way_to_file[:point_index] + '_modified' + way_to_file[point_index:]
+        open(new_way_mod_file, "w+").write(result_string)
+
+        text_input_window = Label(input_window,
+                                  text=f"Итог: {result_string}\n\nПуть до зашифрованного файла: {new_way_mod_file}")
+        text_input_window.place(x=1, y=1)
+
+        copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey", command=lambda:
+                                        input_window.clipboard_append(result_string))
+        copy_text_input_window.place(x=1, y=70)
+
+    except Exception:
+
+        try:
+            for i in way_to_file.lower():
+                result_string += symbol[i] + " "
+            text_input_window = Label(input_window, text=f"Итог: {result_string}")
+            text_input_window.place(x=1, y=1)
+
+            copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey", command=lambda:
+                                            input_window.clipboard_append(result_string))
+            copy_text_input_window.place(x=1, y=50)
+        except Exception:
+            error()
+            return
+
+    input_window.geometry("800x300")
+    input_window.mainloop()

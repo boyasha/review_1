@@ -106,7 +106,7 @@ def showing_vernam(name1, name2):
     encrypt.place(x=90, y=150)
 
 
-def showing_morse(name1, name2):
+def showing_morse(name1, name2, check_decoder=0):
     destroy_useless_items()
     root.title(f"{name1} Азбуки Морзе")
 
@@ -130,11 +130,12 @@ def showing_morse(name1, name2):
     rus_checkbutton.place(x=83, y=110)
     en_checkbutton.place(x=230, y=110)
 
-    encrypt = Button(text=name2, activebackground="grey", width="38", height="2")
+    encrypt = Button(text=name2, activebackground="grey", width="38", height="2",
+                     command=lambda: Algorithms.morse_encrtyption(input_way.get(), value_radiobutton.get(), check_decoder))
     encrypt.place(x=90, y=150)
 
 
-def showing_morse_partial_analysis(name1, name2):
+def showing_caesar_partial_analysis(name1, name2):
     destroy_useless_items()
     root.title(f"{name1} Морзе частотным анализом")
 
@@ -193,10 +194,10 @@ class Display:
                                showing_vernam("Дешифрование", "Дешифровать"))
     algorithm_menu.add_command(label="Дешифрование Цезаря частотным анализом",
                                activebackground="grey",
-                               command=lambda: showing_morse_partial_analysis("Дешифрование", "Дешифровать"))
+                               command=lambda: showing_caesar_partial_analysis("Дешифрование", "Дешифровать"))
     algorithm_menu.add_command(label="Дешифрование Азбуки Морзе",
                                activebackground="grey",
-                               command=lambda: showing_morse("Дешифрование", "Дешифровать"))
+                               command=lambda: showing_morse("Дешифрование", "Дешифровать", 1))
 
     steg_menu.add_command(label="Внедрение в bmp", activebackground="grey")
     steg_menu.add_command(label="Внедрение в jpg", activebackground="grey")
