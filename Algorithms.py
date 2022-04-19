@@ -246,3 +246,65 @@ def morse_encrtyption(way_to_file, language=0, check_decoder=0):
 
     input_window.geometry("800x300")
     input_window.mainloop()
+
+
+def caesar_partial_analysis_encrtyption(way_to_file, language = 0):
+    input_window = Toplevel()
+    result_string = ""
+
+    if language == 1:
+        popular_letter = 'о'
+    else:
+        popular_letter = 'e'
+
+    try:
+        text_from_file = open(way_to_file, "r").read().lower()
+        count_letters = {}
+        count_most_popular = 0
+        for i in text_from_file:
+            if i in count_letters.keys():
+                count_letters[i] += 1
+                if count_letters[i] > count_most_popular:
+                    count_most_popular = count_letters[i]
+            else:
+                count_letters[i] = 0
+        shift = ord(list(count_letters.keys())[list(count_letters.values()).index(count_most_popular)]) - ord(popular_letter)
+        for i in text_from_file:
+            if i == " ": continue
+            result_string += chr(ord(i)-shift)
+        point_index = way_to_file.rfind('.')
+        new_way_mod_file = way_to_file[:point_index] + '_modified' + way_to_file[point_index:]
+        open(new_way_mod_file, "w+").write(result_string)
+        text_input_window = Label(input_window,
+                                  text=f"Итог: {result_string}\n\nПуть до зашифрованного файла: {new_way_mod_file}")
+        text_input_window.place(x=1, y=1)
+        copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey", command=lambda:
+                                        input_window.clipboard_append(result_string))
+        copy_text_input_window.place(x=1, y=70)
+    except Exception:
+        try:
+            count_letters = {}
+            count_most_popular = 0
+            for i in way_to_file:
+                if i in count_letters.keys():
+                    count_letters[i] += 1
+                    if count_letters[i] > count_most_popular:
+                        count_most_popular = count_letters[i]
+                else:
+                    count_letters[i] = 0
+            shift = ord(list(count_letters.keys())[list(count_letters.values()).index(count_most_popular)]) - ord(popular_letter)
+            for i in way_to_file:
+                if i == " ":
+                    continue
+                result_string += chr(ord(i) - shift)
+
+            text_input_window = Label(input_window, text=f"Итог: {result_string}")
+            text_input_window.place(x=1, y=1)
+            copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey", command=lambda:
+                                            input_window.clipboard_append(result_string))
+            copy_text_input_window.place(x=1, y=50)
+        except Exception:
+            error()
+
+    input_window.geometry("800x300")
+    input_window.mainloop()

@@ -159,7 +159,8 @@ def showing_caesar_partial_analysis(name1, name2):
     rus_checkbutton.place(x=83, y=110)
     en_checkbutton.place(x=230, y=110)
 
-    encrypt = Button(text=name2, activebackground="grey", width="38", height="2")
+    encrypt = Button(text=name2, activebackground="grey", width="38", height="2",
+                     command=lambda: Algorithms.caesar_partial_analysis_encrtyption(input_way.get(), value_radiobutton.get()))
     encrypt.place(x=90, y=150)
 
 
