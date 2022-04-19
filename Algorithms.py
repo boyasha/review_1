@@ -435,9 +435,11 @@ def vernam_encrtyption(way_to_file, key, language=0, check_decode=0):
 
             text_from_file = open(way_to_file, "r").read().upper()
 
+            if len(key) < len(text_from_file):
+                raise Exception
+
             for i in range(len(text_from_file)):
-                result_string += alphabet[
-                    (alphabet.index(text_from_file[i]) - (alphabet.index(key[i % len(key)]))) % len(alphabet)]
+                result_string += alphabet[((alphabet.index(text_from_file[i])+1) ^ (alphabet.index(key[i])+1))%len(alphabet)]
 
             point_index = way_to_file.rfind('.')
             new_way_mod_file = way_to_file[:point_index] + '_modified' + way_to_file[point_index:]
@@ -457,9 +459,12 @@ def vernam_encrtyption(way_to_file, key, language=0, check_decode=0):
                     if i not in alphabet:
                         raise Exception
 
+                if len(key) < len(way_to_file):
+                    raise Exception
+
                 for i in range(len(way_to_file)):
                     result_string += alphabet[
-                        (alphabet.index(way_to_file[i]) - (alphabet.index(key[i % len(key)]))) % len(alphabet)]
+                        ((alphabet.index(way_to_file[i]) + 1) ^ (alphabet.index(key[i]) + 1)) % len(alphabet)]
 
                 text_input_window = Label(input_window, text=f"Итог: {result_string}")
                 text_input_window.place(x=1, y=1)
@@ -479,9 +484,14 @@ def vernam_encrtyption(way_to_file, key, language=0, check_decode=0):
 
             text_from_file = open(way_to_file, "r").read().upper()
 
+            if len(key) < len(text_from_file):
+                raise Exception
+
+            if len(key) < len(text_from_file):
+                raise Exception
+
             for i in range(len(text_from_file)):
-                result_string += alphabet[
-                    (alphabet.index(text_from_file[i]) + (alphabet.index(key[i % len(key)]))) % len(alphabet)]
+                result_string += alphabet[((alphabet.index(text_from_file[i])+1) ^ (alphabet.index(key[i])+1))%len(alphabet)]
 
             point_index = way_to_file.rfind('.')
             new_way_mod_file = way_to_file[:point_index] + '_modified' + way_to_file[point_index:]
@@ -496,15 +506,18 @@ def vernam_encrtyption(way_to_file, key, language=0, check_decode=0):
             copy_text_input_window.place(x=1, y=70)
 
         except Exception as exc:
-
+            print(exc)
             try:
                 for i in key:
                     if i not in alphabet:
                         raise Exception
 
+                if len(key) < len(way_to_file):
+                    raise Exception
+
                 for i in range(len(way_to_file)):
                     result_string += alphabet[
-                        (alphabet.index(way_to_file[i]) + (alphabet.index(key[i % len(key)]))) % len(alphabet)]
+                        ((alphabet.index(way_to_file[i]) + 1) ^ (alphabet.index(key[i]) + 1)) % len(alphabet)]
 
                 text_input_window = Label(input_window, text=f"Итог: {result_string}")
                 text_input_window.place(x=1, y=1)
@@ -513,7 +526,8 @@ def vernam_encrtyption(way_to_file, key, language=0, check_decode=0):
                                                 command=lambda:
                                                 input_window.clipboard_append(result_string))
                 copy_text_input_window.place(x=1, y=50)
-            except Exception:
+            except Exception as exc:
+                print(exc)
                 error()
                 return
 
