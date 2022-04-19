@@ -114,6 +114,10 @@ def morse_encrtyption(way_to_file, language=0, check_decoder=0):
         "y": "-.--",
         "z": "--..",
         " ": " ",
+        ".": "......",
+        ",": ".-.-.-",
+        "?": "..--..",
+        "!": "--..--",
         "0": "-----",
         "1": ".----",
         "2": "..---",
@@ -157,45 +161,88 @@ def morse_encrtyption(way_to_file, language=0, check_decoder=0):
         "э": "..-..",
         "ю": "..__",
         "я": ".-.-",
-        ".": "......",
-        ",": ".-.-.-",
-        "?": "..--..",
-        "!": "--..--",
     }
     result_string = ''
 
-    try:
-        text_from_file = open(way_to_file, "r").read().lower()
+    if language == 1:
+        symbol_keys = list(symbol.keys())[26:]
+        symbol_values = list(symbol.values())[26:]
+    else:
+        symbol_keys = list(symbol.keys())[:41]
+        symbol_values = list(symbol.values())[:41]
 
-        for i in text_from_file:
-            result_string += symbol[i] + " "
-
-        point_index = way_to_file.rfind('.')
-        new_way_mod_file = way_to_file[:point_index] + '_modified' + way_to_file[point_index:]
-        open(new_way_mod_file, "w+").write(result_string)
-
-        text_input_window = Label(input_window,
-                                  text=f"Итог: {result_string}\n\nПуть до зашифрованного файла: {new_way_mod_file}")
-        text_input_window.place(x=1, y=1)
-
-        copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey", command=lambda:
-                                        input_window.clipboard_append(result_string))
-        copy_text_input_window.place(x=1, y=70)
-
-    except Exception:
-
+    if check_decoder == 1:
         try:
-            for i in way_to_file.lower():
-                result_string += symbol[i] + " "
-            text_input_window = Label(input_window, text=f"Итог: {result_string}")
+            text_from_file = open(way_to_file, "r").read().lower()
+
+            for i in text_from_file.split(" "):
+                result_string += symbol_keys[symbol_values.index(i)] + " "
+
+            point_index = way_to_file.rfind('.')
+            new_way_mod_file = way_to_file[:point_index] + '_modified' + way_to_file[point_index:]
+            open(new_way_mod_file, "w+").write(result_string)
+
+            text_input_window = Label(input_window,
+                                      text=f"Итог: {result_string}\n\nПуть до дешифрованного файла: {new_way_mod_file}")
             text_input_window.place(x=1, y=1)
 
             copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey", command=lambda:
                                             input_window.clipboard_append(result_string))
-            copy_text_input_window.place(x=1, y=50)
+            copy_text_input_window.place(x=1, y=70)
+
         except Exception:
-            error()
-            return
+
+            try:
+                for i in way_to_file.split(' '):
+                    result_string += symbol_keys[symbol_values.index(i)] + " "
+
+                text_input_window = Label(input_window, text=f"Итог: {result_string}")
+                text_input_window.place(x=1, y=1)
+
+                copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey",
+                                                command=lambda:
+                                                input_window.clipboard_append(result_string))
+                copy_text_input_window.place(x=1, y=50)
+
+
+            except Exception as exc:
+                print(exc)
+                error()
+                return
+
+    else:
+        try:
+            text_from_file = open(way_to_file, "r").read().lower()
+
+            for i in text_from_file:
+                result_string += symbol[i] + " "
+
+            point_index = way_to_file.rfind('.')
+            new_way_mod_file = way_to_file[:point_index] + '_modified' + way_to_file[point_index:]
+            open(new_way_mod_file, "w+").write(result_string)
+
+            text_input_window = Label(input_window,
+                                      text=f"Итог: {result_string}\n\nПуть до зашифрованного файла: {new_way_mod_file}")
+            text_input_window.place(x=1, y=1)
+
+            copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey", command=lambda:
+                                            input_window.clipboard_append(result_string))
+            copy_text_input_window.place(x=1, y=70)
+
+        except Exception:
+
+            try:
+                for i in way_to_file.lower():
+                    result_string += symbol[i] + " "
+                text_input_window = Label(input_window, text=f"Итог: {result_string}")
+                text_input_window.place(x=1, y=1)
+
+                copy_text_input_window = Button(input_window, text="Скопировать", activebackground="grey", command=lambda:
+                                                input_window.clipboard_append(result_string))
+                copy_text_input_window.place(x=1, y=50)
+            except Exception:
+                error()
+                return
 
     input_window.geometry("800x300")
     input_window.mainloop()
