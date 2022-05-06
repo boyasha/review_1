@@ -1,4 +1,4 @@
-from Display import Display
+from src.Display import Display
 
 
 def main():

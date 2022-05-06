@@ -11,6 +11,7 @@ class Steganography:
     def to_bin(self, data):
         """
         Перевод в двоичную запись
+        :param data: данные для перевода
         """
         if isinstance(data, str):
             return ''.join([format(ord(i), "08b") for i in data])
@@ -24,6 +25,8 @@ class Steganography:
     def encode(self, image_name, secret_data):
         """
         Шифрование текста в картинку
+        :param image_name: путь до картинки
+        :param secret_data: секретное сообщение
         """
         image = cv2.imread(image_name)
         n_bytes = image.shape[0] * image.shape[1] * 3 // 8
@@ -54,7 +57,8 @@ class Steganography:
 
     def decode(self, image_name):
         """
-        Дешифрование из картинки текста
+        Декодирование из картинки
+        :param image_name: путь до картинки
         """
         image = cv2.imread(image_name)
         binary_data = ""

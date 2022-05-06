@@ -5,6 +5,9 @@ class Globals:
         self.window_size = "500x300"
         self.button_color = "grey"
 
+        self.text_algorithm = "Алгоритмы"
+        self.text_steganography = "Стеганография"
+
         self.text_encrypt_tittle = "Шифрование"
         self.text_decode_tittle = "Дешифрование"
 
@@ -23,6 +26,13 @@ class Globals:
         self.text_bmp = "bmp"
         self.text_jpg = "jpg"
         self.text_png = "png"
+
+        self.text_message_error = "Что-то пошло не так, попробуйте заново!"
+        self.text_steg_tittle_1 = "Внедрение в"
+        self.text_steg_tittle_2 = "Извлечение из"
+
+        self.text_rus = "Русский"
+        self.text_eng = "Английский"
 
         self.numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
         self.en_alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',

@@ -1,7 +1,6 @@
-from tkinter import *
+import tkinter as tk
 from tkinter import messagebox, Toplevel
-from Globals import Globals
-import traceback
+from src.Globals import Globals
 
 
 class Algorithms:
@@ -12,11 +11,13 @@ class Algorithms:
         """
         Вывод ошибки в данных пользователя
         """
-        messagebox.showwarning(message)
+        messagebox.showwarning(self.Globals.text_message_error)
 
     def get_new_way_to_mod_file(self, way_to_file, result_string):
         """
         Создание и вывод нового файла для зашифрованных файлов
+        :param way_to_file: путь до файла
+        :param result_string: результат работы алгоритма
         """
         point_index = way_to_file.rfind('.')
         new_way_mod_file = way_to_file[:point_index] + '_modified' + way_to_file[point_index:]
@@ -26,18 +27,20 @@ class Algorithms:
     def out_put_of_result(self, result_string, new_way_mod_file=False):
         """
         Вывод шифрования или дешифрования
+        :param result_string: результат работы алгоритма
+        :param new_way_mod_file: путь до нового файла с результатом работы алгоритма
         """
         output_window = Toplevel()
-        text_output_window = Label()
+        text_output_window = tk.Label()
 
         if new_way_mod_file:
-            text_output_window = Label(output_window,
+            text_output_window = tk.Label(output_window,
                                        text=f"Итог: {result_string}\n\nПуть до зашифрованного файла: {new_way_mod_file}")
         else:
-            text_output_window = Label(output_window, text=f"Итог: {result_string}")
+            text_output_window = tk.Label(output_window, text=f"Итог: {result_string}")
 
         text_output_window.place(x=1, y=1)
-        copy_text_output_window = Button(output_window, text="Скопировать", activebackground="grey",
+        copy_text_output_window = tk.Button(output_window, text="Скопировать", activebackground="grey",
                                          command=lambda: output_window.clipboard_append(result_string))
         copy_text_output_window.place(x=1, y=70)
 
@@ -47,6 +50,8 @@ class Algorithms:
     def caesar_encryption(self, way_to_file, shift):
         """
         Шифрование Цезаря
+        :param way_to_file: путь до файла
+        :param shift: сдвиг
         """
         numbers = self.Globals.numbers
         en_alphabet = self.Globals.en_alphabet
@@ -104,6 +109,9 @@ class Algorithms:
     def morse_encrtyption(self, way_to_file, language=0, check_decoder=0):
         """
         Шифрование/дешифрование Азбукой Морзе
+        :param way_to_file: путь до файла
+        :param language: язык
+        :param check_decoder: проверка на шифрование/дешифрование
         """
         symbol = self.Globals.symbol
         result_string = ''
@@ -115,16 +123,12 @@ class Algorithms:
             try:
 
                 text_from_file = open(way_to_file, "r").read().lower()
-                print("fbr")
                 for i in text_from_file.split(" "):
-                    print(i)
                     result_string += symbol_keys[symbol_values.index(i)] + " "
-                print(result_string)
                 new_way_mod_file = self.get_new_way_to_mod_file(way_to_file, result_string)
                 self.out_put_of_result(result_string, new_way_mod_file)
 
             except Exception as exc:
-                print(traceback.format_exc())
                 try:
                     for i in way_to_file.split(' '):
                         result_string += symbol_keys[symbol_values.index(i)]
@@ -159,6 +163,8 @@ class Algorithms:
     def caesar_partial_analysis_encrtyption(self, way_to_file, language=0):
         """
         Дешифрование шифра Цезаря методом частотного анализа
+        :param way_to_file: путь до файла
+        :param language: язык
         """
         numbers = self.Globals.numbers
 
@@ -243,6 +249,10 @@ class Algorithms:
     def visener_encrtyption(self, way_to_file, key, language=0, check_decode=0):
         """
         Шифрование/дешифрование Виженера
+        :param way_to_file: путь до файла
+        :param key: ключ шифрования
+        :param language: язык
+        :param check_decode: проверка на шифрование/дешифрование
         """
         result_string = ""
 
@@ -316,6 +326,10 @@ class Algorithms:
     def vernam_encrtyption(self, way_to_file, key, language=0, check_decode=0):
         """
         Шифрование/Дешифрование Вернама
+        :param way_to_file: путь до файла
+        :param key: ключ шифрования
+        :param language: язык
+        :param check_decode: проверка на шифрование/дешифрование
         """
         result_string = ""
 
