@@ -1,8 +1,8 @@
-import Display
+from Display import Display
 
 
 def main():
-    Display.Display()
+    Display()
 
 
 if __name__ == "__main__":
